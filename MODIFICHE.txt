@@ -10,6 +10,8 @@ di immagini cambiassero al tocco (ovvero all’incremento del contatore)
 - reso il container dell'immagine più piccolo, solo l'area dell'immagine è sensibile al tap.
 
 
+
+
 MODIFICHE DA FARE
 
 
