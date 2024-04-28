@@ -1,0 +1,15 @@
+MODIFICHE SVOLTE SU FLUTTER
+
+
+
+- Ho scaricato ed installato Flutter
+- Ho creato una prima App
+- Ho modificato il colore dello sfondo
+- Ho modificato lo sfondo facendo si che una serie
+di immagini cambiassero al tocco (ovvero all’incremento del contatore)
+- reso il container dell'immagine più piccolo, solo l'area dell'immagine è sensibile al tap.
+
+
+MODIFICHE DA FARE
+
+
