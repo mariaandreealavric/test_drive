@@ -123,7 +123,7 @@ class _CounterPageState extends State<CounterPage> {
               ),
               Text(
                 '$_counter',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                   color: Colors.white, // Colore bianco per il contatore
