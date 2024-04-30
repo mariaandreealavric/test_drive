@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Gioco Contatore',
+      home: const StartPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class StartPage extends StatelessWidget {
+  const StartPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Inizia il Gioco!'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ImageGalleryPage(),
+              ),
+            );
+          },
+          child: const Text('Inizia il Gioco!'),
+        ),
+      ),
+    );
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  int _currentImageIndex = 0;
+class ImageGalleryPage extends StatelessWidget {
+  ImageGalleryPage({super.key});
+
   final List<String> _imagePaths = [
     'assets/david.jpg',
     'assets/san_giorgio.jpg',
@@ -49,78 +52,86 @@ class _MyHomePageState extends State<MyHomePage> {
     'assets/Donatello.jpg',
   ];
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Scegli un\'immagine'),
+      ),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemCount: _imagePaths.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CounterPage(imagePath: _imagePaths[index]),
+                ),
+              );
+            },
+            child: Image.asset(
+              _imagePaths[index],
+              fit: BoxFit.contain, // Adatta l'immagine per coprire tutto lo schermo
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CounterPage extends StatefulWidget {
+  final String imagePath;
+
+  const CounterPage({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  _CounterPageState createState() => _CounterPageState();
+}
+
+class _CounterPageState extends State<CounterPage> {
+  int _counter = 0;
+
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
-    });
-  }
-
-  void _changeImage() {
-    setState(() {
-      _currentImageIndex = (_currentImageIndex + 1) % _imagePaths.length;
-      _incrementCounter(); // Chiamata a _incrementCounter
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('Contatore'),
       ),
       body: GestureDetector(
-        onTap: _changeImage,
-        // Chiama la funzione quando viene toccata l'area dello schermo
-        child: Center(
-    child: Container(
-          width: 400,
-          height: 400,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(_imagePaths[_currentImageIndex]),
-              fit: BoxFit.contain,
-            ),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Tap on the image to increment the counter:',
-                  style: TextStyle(
-                    color:
-                        Colors.white, // Imposta il colore del testo su bianco
-                  ),
+        onTap: _incrementCounter, // Incrementa il contatore quando si clicca sull'immagine
+        child: Container(
+          width: double.infinity, // Larghezza del box (tutta la larghezza dello schermo)
+          height: double.infinity, // Altezza del box (tutta l'altezza dello schermo)
+          color: Colors.transparent, // Colore trasparente
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                widget.imagePath, // Immagine da visualizzare
+                fit: BoxFit.contain, // Adatta l'immagine per coprire tutto il box
+              ),
+              Text(
+                '$_counter',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, // Colore bianco per il contatore
                 ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Colors
-                            .white, // Imposta il colore del testo su bianco
-                      ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      ),
       ),
     );
   }

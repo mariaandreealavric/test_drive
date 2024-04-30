@@ -8,8 +8,8 @@ MODIFICHE SVOLTE SU FLUTTER
 - Ho modificato lo sfondo facendo si che una serie
 di immagini cambiassero al tocco (ovvero all’incremento del contatore)
 - reso il container dell'immagine più piccolo, solo l'area dell'immagine è sensibile al tap.
-
-
+-mi sono collegata a git crendo una repository locale e una su github condividendo il progetto con daniele.
+-creato un menu iniziale con "inizia il gioco" e scelta delle immagini.
 
 
 MODIFICHE DA FARE
