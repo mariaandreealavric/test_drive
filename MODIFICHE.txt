@@ -15,3 +15,6 @@ di immagini cambiassero al tocco (ovvero all’incremento del contatore)
 MODIFICHE DA FARE
 
 
+
+
+
